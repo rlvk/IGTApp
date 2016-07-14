@@ -4,13 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by rafalwesolowski on 14/07/2016.
  */
 public class DateUtil {
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static final String JACKPOT_DATE_FORMAT = "dd MMMM yyyy";
 
     // Expiration period 1 hour in miliseconds
@@ -23,7 +24,7 @@ public class DateUtil {
      * @return String representing date in specified format
      */
     public static String getStringDate(long milliSeconds) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milliSeconds);
@@ -38,7 +39,7 @@ public class DateUtil {
         Date cacheUntil = null;
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
             cacheUntil = format.parse(dateString);
         } catch (ParseException ex) {
             ex.printStackTrace();
@@ -82,10 +83,10 @@ public class DateUtil {
             return null;
         }
 
-        Date jackpotDate = new Date();
+        Date jackpotDate = null;
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+            SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
             jackpotDate = format.parse(dateString);
         } catch (ParseException ex) {
             ex.printStackTrace();

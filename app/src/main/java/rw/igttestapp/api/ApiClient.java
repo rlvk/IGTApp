@@ -28,13 +28,28 @@ public class ApiClient {
         mQueue = Volley.newRequestQueue(context);
     }
 
-    public void getGames(Response.Listener<GameResponse> responseListener, Response.ErrorListener errorListener){
+    /**
+     * Get games available
+     *
+     * @param responseListener {@link Response.Listener<GameResponse>}
+     * @param errorListener    {@link Response.ErrorListener}
+     */
+    public void getGames(Response.Listener<GameResponse> responseListener, Response.ErrorListener errorListener) {
         Uri.Builder builder = Uri.parse(BuildConfig.BASE_URL)
                 .buildUpon().path(GAME_REQUEST_PATH);
         callAPI(builder.build().toString(), Request.Method.GET, GameResponse.class, responseListener, errorListener);
     }
 
-    private <T> void callAPI(String url, int method, Class<T> clazz, Response.Listener responseListener, Response.ErrorListener errorListener){
+    /**
+     * Create base GsonRequest and add it to the queue.
+     *
+     * @param url              Request url
+     * @param method           Request method [GET,POST,PUT,DELETE]
+     * @param clazz            {@link Class<T>}
+     * @param responseListener {@link Response.Listener}
+     * @param errorListener    {@link Response.ErrorListener}
+     */
+    private <T> void callAPI(String url, int method, Class<T> clazz, Response.Listener responseListener, Response.ErrorListener errorListener) {
         GsonRequest gsonRequest = new GsonRequest(url, method, clazz, null, responseListener, errorListener);
         mQueue.add(gsonRequest);
     }
